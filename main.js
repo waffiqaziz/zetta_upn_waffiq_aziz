@@ -43,7 +43,7 @@ function bookPurchasing(
   for (let i = 0; i < 100; i++) {
     inputUser = parseInt(prompt(`Jumlah Stok yang Akan Dibeli : `));
     if (inputUser > stock) {
-      console.log(`Stok tidak cukup ${inputUser}`);
+      console.log(`Stok tidak cukup`);
       continue;
     } else {
       stock -= inputUser; // subtraction assignment
@@ -59,7 +59,7 @@ function bookPurchasing(
     console.log(`*Stok Sekarang\t: ${stock}\n`);
     console.log(`===============================================`);
 
-    if (amountOfPurchased >= stock) {
+    if (stocstock <= 0) {
       console.log(`Maaf Tidak Dapat Menambah Pembelian\nStok Tidak Tersedia`);
       break;
     } else {
