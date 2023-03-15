@@ -19,7 +19,8 @@ function bookPurchasing(
   discount,
   publisher,
   stock,
-  amountOfPurchased
+  amountOfPurchased,
+  termOfCredit
 ) {
   let inputUser;
   const tax = 5;
@@ -37,8 +38,8 @@ function bookPurchasing(
   console.log(`ISBN\t\t\t: ${isbn}`);
   console.log(`Penerbit\t\t: ${publisher}`);
   console.log(`Diskon\t\t\t: ${discount}% (-${(price * discount) / 100})`);
-  console.log(`Harga Setelah Diskon\t: ${countDiscount(price, 1, discount)}\n`);
-  console.log(`===============================================`);
+  console.log(`Harga Setelah Diskon\t: ${countDiscount(price, 1, discount)}`);
+  console.log(`===============================================\n`);
 
   for (let i = 0; i < 100; i++) {
     inputUser = parseInt(prompt(`Jumlah Stok yang Akan Dibeli : `));
@@ -59,7 +60,7 @@ function bookPurchasing(
     console.log(`*Stok Sekarang\t: ${stock}\n`);
     console.log(`===============================================`);
 
-    if (amountOfPurchased >= stock) {
+    if (stock <= 0) {
       console.log(`Maaf Tidak Dapat Menambah Pembelian\nStok Tidak Tersedia`);
       break;
     } else {
@@ -76,11 +77,36 @@ function bookPurchasing(
       }
     }
   }
+
+  // term of credit
+  let arrCredit = [];
+  let arrMonth = [];
+  for (var i = 0; i < termOfCredit; i++) {
+    arrMonth.push(`Bulan ke-${i + 1}`);
+    arrCredit.push(countTax(tempPrice, tax) / termOfCredit);
+  }
+
+  let objCredit = [];
+  for (var i = 0; i < termOfCredit; i++) {
+    objCredit.push({ month: arrMonth[i], credit: arrCredit[i] });
+  }
+
+  const sumCredit = arrCredit.reduce(
+    (accumulator, currentValue) => accumulator + currentValue
+  );
+
+  // show term of credit
+  for (var i = 0; i < termOfCredit; i++) {
+    console.log(`${objCredit[i].month}\t: ${objCredit[i].credit}`);
+  }
+  console.log(`Total\t: ${sumCredit}`);
+
 }
 
 function main() {
   console.clear();
   const stock = prompt(`Jumlah Stok Awal = `);
+  const termOfCredit = prompt(`Cicilan (bulan) = `);
 
   bookPurchasing(
     "Lost In The Jungle",
@@ -91,7 +117,8 @@ function main() {
     "10",
     "Elex Media Komputindo",
     stock,
-    null
+    null,
+    termOfCredit
   );
 }
 
