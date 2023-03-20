@@ -1,3 +1,76 @@
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+
+app.get("/bookPurchased", (req, res) => {
+  res.json({
+    message: "Still Under Development",
+  });
+});
+
+app.post("/bookPurchasing", (req, res) => {
+  const title = req.body.title;
+  const writer = req.body.writer;
+  const edition = req.body.edition;
+  const isbn = req.body.isbn;
+  const price = req.body.price;
+  const discount = req.body.discount;
+  const publisher = req.body.publisher;
+  const stock = req.body.stock;
+  const termOfCredit = req.body.termOfCredit;
+
+  if (!title) {
+    return res.sendStatus(400);
+  }
+  if (!writer) {
+    return res.sendStatus(400);
+  }
+  if (!edition) {
+    return res.sendStatus(400);
+  }
+  if (!isbn) {
+    return res.sendStatus(400);
+  }
+  if (!price) {
+    return res.sendStatus(400);
+  }
+  if (!discount) {
+    return res.sendStatus(400);
+  }
+  if (!publisher) {
+    return res.sendStatus(400);
+  }
+  if (!stock) {
+    return res.sendStatus(400);
+  }
+  if (!termOfCredit) {
+    return res.sendStatus(400);
+  }
+
+  console.log(title);
+  res.status(201).json({
+    message: "Purchasing Successful",
+    price: bookPurchasing(
+      title,
+      writer,
+      edition,
+      isbn,
+      price,
+      discount,
+      publisher,
+      stock,
+      termOfCredit
+    )
+  }
+  );
+});
+
+app.listen(3000, () => console.log("Api Server is running..."));
+
 function countDiscount(price, piece, percent) {
   percent /= 100; // division assignment
   price -= price * percent; // subtraction assignment
@@ -7,7 +80,6 @@ function countDiscount(price, piece, percent) {
 function countTax(price, tax) {
   return (price *= 1 + tax / 100); // multiplication assignment
 }
-
 
 function bookPurchasing(
   title,
@@ -23,7 +95,7 @@ function bookPurchasing(
   let inputUser = 0;
   const tax = 5;
   let tempPrice = 0;
-  let amountOfPurchased = 0
+  let amountOfPurchased = 0;
 
   console.clear();
   console.log(`===============================================`);
@@ -41,7 +113,7 @@ function bookPurchasing(
   console.log(`===============================================\n`);
 
   for (let i = 0; i < 100; i++) {
-    inputUser =  Math.floor(Math.random() * 10) + 1
+    inputUser = Math.floor(Math.random() * 10) + 1;
     console.log(`Jumlah Stok yang Akan Dibeli : ${inputUser}`);
     if (inputUser > stock) {
       console.log(`Stok tidak cukup`);
@@ -67,8 +139,8 @@ function bookPurchasing(
   }
 
   // term of credit
-  let arrCredit = [];
   let arrMonth = [];
+  let arrCredit = [];
   for (var i = 0; i < termOfCredit; i++) {
     arrMonth.push(`Bulan ke-${i + 1}`);
     arrCredit.push(countTax(tempPrice, tax) / termOfCredit);
@@ -89,23 +161,5 @@ function bookPurchasing(
   }
   console.log(`Total\t\t: ${sumCredit}`);
 
+  return countTax(tempPrice,tax);
 }
-
-function main() {
-  const stock = 20;
-  const termOfCredit = 3;
-
-  bookPurchasing(
-    "Lost In The Jungle",
-    "Yossi Ghinsberg",
-    "1st",
-    "978-602-00-1175",
-    60000,
-    "10",
-    "Elex Media Komputindo",
-    stock,
-    termOfCredit
-  );
-}
-
-main();
