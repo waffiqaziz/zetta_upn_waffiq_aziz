@@ -1,5 +1,3 @@
-const prompt = require("prompt-sync")({ sigint: true });
-
 function countDiscount(price, piece, percent) {
   percent /= 100; // division assignment
   price -= price * percent; // subtraction assignment
@@ -10,6 +8,7 @@ function countTax(price, tax) {
   return (price *= 1 + tax / 100); // multiplication assignment
 }
 
+
 function bookPurchasing(
   title,
   writer,
@@ -19,12 +18,12 @@ function bookPurchasing(
   discount,
   publisher,
   stock,
-  amountOfPurchased,
   termOfCredit
 ) {
-  let inputUser;
+  let inputUser = 0;
   const tax = 5;
   let tempPrice = 0;
+  let amountOfPurchased = 0
 
   console.clear();
   console.log(`===============================================`);
@@ -42,7 +41,8 @@ function bookPurchasing(
   console.log(`===============================================\n`);
 
   for (let i = 0; i < 100; i++) {
-    inputUser = parseInt(prompt(`Jumlah Stok yang Akan Dibeli : `));
+    inputUser =  Math.floor(Math.random() * 10) + 1
+    console.log(`Jumlah Stok yang Akan Dibeli : ${inputUser}`);
     if (inputUser > stock) {
       console.log(`Stok tidak cukup`);
       continue;
@@ -61,20 +61,8 @@ function bookPurchasing(
     console.log(`===============================================`);
 
     if (stock <= 0) {
-      console.log(`Maaf Tidak Dapat Menambah Pembelian\nStok Tidak Tersedia`);
+      console.log(`Maaf Tidak Dapat Menambah Pembelian\nStok Tidak Tersedia\n`);
       break;
-    } else {
-      inputUser = prompt(`Beli lagi? (y/n) `);
-
-      // check input user if match/not
-      if (inputUser == "n" || inputUser == "N") {
-        break;
-      } else if (inputUser == "y" || inputUser == "Y") {
-        continue;
-      } else {
-        console.log(`Input salah`);
-        break;
-      }
     }
   }
 
@@ -99,14 +87,13 @@ function bookPurchasing(
   for (var i = 0; i < termOfCredit; i++) {
     console.log(`${objCredit[i].month}\t: ${objCredit[i].credit}`);
   }
-  console.log(`Total\t: ${sumCredit}`);
+  console.log(`Total\t\t: ${sumCredit}`);
 
 }
 
 function main() {
-  console.clear();
-  const stock = prompt(`Jumlah Stok Awal = `);
-  const termOfCredit = prompt(`Cicilan (bulan) = `);
+  const stock = 20;
+  const termOfCredit = 3;
 
   bookPurchasing(
     "Lost In The Jungle",
@@ -117,7 +104,6 @@ function main() {
     "10",
     "Elex Media Komputindo",
     stock,
-    null,
     termOfCredit
   );
 }
