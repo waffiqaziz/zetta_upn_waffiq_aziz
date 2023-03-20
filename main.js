@@ -12,7 +12,7 @@ app.get("/bookPurchased", (req, res) => {
   });
 });
 
-app.post("/bookPurchasing", (req, res) => {
+app.post("/bookPurchasing", isAuth, (req, res) => {
   const title = req.body.title;
   const writer = req.body.writer;
   const edition = req.body.edition;
@@ -69,7 +69,18 @@ app.post("/bookPurchasing", (req, res) => {
   );
 });
 
+
 app.listen(3000, () => console.log("Api Server is running..."));
+
+function isAuth(req, res, next) {
+  const auth = req.headers.authorization;p
+  if (auth === 'your_password') {
+    next();
+  } else {
+    res.status(401);
+    res.send('Access forbidden');
+  }
+}
 
 function countDiscount(price, piece, percent) {
   percent /= 100; // division assignment
