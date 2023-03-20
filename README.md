@@ -10,6 +10,7 @@
 ```
 5. Run ```npm start```
 6. Test using Postman or any platform for building and using APIs. Link : ```http://localhost:3000/bookPurchasing``` (use JSON body)
+7. Set headers key "authorization" and value "your_password"
 
 ### **Structure Post Method**
 - title : String
