@@ -73,7 +73,7 @@ app.post("/bookPurchasing", isAuth, (req, res) => {
 app.listen(3000, () => console.log("Api Server is running..."));
 
 function isAuth(req, res, next) {
-  const auth = req.headers.authorization;p
+  const auth = req.headers.authorization;
   if (auth === 'your_password') {
     next();
   } else {
