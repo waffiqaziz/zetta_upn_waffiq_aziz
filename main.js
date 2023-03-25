@@ -83,8 +83,15 @@ app.post("/bookPurchasing", isAuth, (req, res) => {
   }
 
   let objCredit = [];
+  let remainingBalance = taxPrice;
   for (var i = 0; i < termOfCredit; i++) {
-    objCredit.push({ month: arrMonth[i], credit: arrCredit[i] });
+  remainingBalance -= arrCredit[i]
+
+    objCredit.push({
+      month: arrMonth[i],
+      credit: arrCredit[i],
+      remainingBalance : remainingBalance
+    });
   }
 
   const sumCredit = arrCredit.reduce(

@@ -29,12 +29,12 @@
         "title": "Lost In The Jungle",
         "writer": "Yossi Ghinsberg",
         "publisher": "Elex Media Komputindo",
-        "price": 100000,
+        "price": 800000,
         "discount": 10,
-        "stock": 5
+        "stock": 3
     },
     "purchasedAmount" : 2,
-    "termOfCredit": 2
+    "termOfCredit": 6
 }
 ```
 
@@ -57,11 +57,33 @@
     "creditPayment": [
         {
             "month": "Bulan ke-1",
-            "credit": 756000
+            "credit": 252000,
+            "remainingBalance": 1260000
         },
         {
             "month": "Bulan ke-2",
-            "credit": 756000
+            "credit": 252000,
+            "remainingBalance": 1008000
+        },
+        {
+            "month": "Bulan ke-3",
+            "credit": 252000,
+            "remainingBalance": 756000
+        },
+        {
+            "month": "Bulan ke-4",
+            "credit": 252000,
+            "remainingBalance": 504000
+        },
+        {
+            "month": "Bulan ke-5",
+            "credit": 252000,
+            "remainingBalance": 252000
+        },
+        {
+            "month": "Bulan ke-6",
+            "credit": 252000,
+            "remainingBalance": 0
         }
     ]
 }
