@@ -1,15 +1,9 @@
 ### **Step by Step**
 1. Clone repo
 2. Run ```npm install express cors body-parser```
-3. Update package.json 
-``` 
-  "scripts": {
-    "start": "node main.js"
-  },
-```
-4. Run ```node main.js```
-5. Test using Postman or any platform for building and using APIs. Link : ```http://localhost:3000/bookPurchasing``` (use JSON body)
-6. Set headers key "authorization" and value "your_password"
+3. Run ```node main.js```
+4. Test using Postman or any platform for building and using APIs. Link : ```http://localhost:3000/bookPurchasing``` (use JSON body)
+5. Set headers key "authorization" and value "your_password"
 
 ### **Structure Post Method**
 - title : String
