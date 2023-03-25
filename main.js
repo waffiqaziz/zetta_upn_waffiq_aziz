@@ -1,152 +1,77 @@
 const express = require("express");
+// const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
+// app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/bookPurchased", (req, res) => {
-  res.json({
-    message: "Still Under Development",
-  });
-});
-
 app.post("/bookPurchasing", isAuth, (req, res) => {
-  const title = req.body.title;
-  const writer = req.body.writer;
-  const edition = req.body.edition;
-  const isbn = req.body.isbn;
-  const price = req.body.price;
-  const discount = req.body.discount;
-  const publisher = req.body.publisher;
-  const stock = req.body.stock;
-  const termOfCredit = req.body.termOfCredit;
+  let bookDetails = req.body.bookDetails;
+  let termOfCredit = req.body.termOfCredit;
+  let purchasedAmount = req.body.purchasedAmount;
 
-  if (!title) {
-    return res.sendStatus(400);
+  const tax = 5;
+  let originPrice = 0;
+  let discountPrice = 0;
+  let taxPrice = 0;
+
+  // check data
+  if (!bookDetails.title) {
+    return res.status(400).json({
+      error: `Title is null`,
+    });
   }
-  if (!writer) {
-    return res.sendStatus(400);
+  if (!bookDetails.writer) {
+    return res.status(400).json({
+      error: `Writer is null`,
+    });
   }
-  if (!edition) {
-    return res.sendStatus(400);
+  if (!bookDetails.price) {
+    return res.status(400).json({
+      error: `Price is null`,
+    });
   }
-  if (!isbn) {
-    return res.sendStatus(400);
+  if (!bookDetails.discount) {
+    return res.status(400).json({
+      error: `Discount is null`,
+    });
   }
-  if (!price) {
-    return res.sendStatus(400);
+  if (!bookDetails.publisher) {
+    return res.status(400).json({
+      error: `Publisher is null`,
+    });
   }
-  if (!discount) {
-    return res.sendStatus(400);
-  }
-  if (!publisher) {
-    return res.sendStatus(400);
-  }
-  if (!stock) {
-    return res.sendStatus(400);
+  if (!bookDetails.stock) {
+    return res.status(400).json({
+      error: `Stock is null`,
+    });
   }
   if (!termOfCredit) {
-    return res.sendStatus(400);
+    return res.status(400).json({
+      error: `Term of Credit is null`,
+    });
+  }
+  if (!purchasedAmount) {
+    return res.status(400).json({
+      error: `Purchased Amount is null`,
+    });
   }
 
-  console.log(title);
-  res.status(201).json({
-    message: "Purchasing Successful",
-    price: bookPurchasing(
-      title,
-      writer,
-      edition,
-      isbn,
-      price,
-      discount,
-      publisher,
-      stock,
-      termOfCredit
-    )
-  }
-  );
-});
-
-
-app.listen(3000, () => console.log("Api Server is running..."));
-
-function isAuth(req, res, next) {
-  const auth = req.headers.authorization;
-  if (auth === 'your_password') {
-    next();
+  if (purchasedAmount > bookDetails.stock) {
+    return res.status(400).json({
+      error: `Stok Tidak Cukup.`,
+    });
   } else {
-    res.status(401);
-    res.send('Access forbidden');
-  }
-}
-
-function countDiscount(price, piece, percent) {
-  percent /= 100; // division assignment
-  price -= price * percent; // subtraction assignment
-  return price * piece;
-}
-
-function countTax(price, tax) {
-  return (price *= 1 + tax / 100); // multiplication assignment
-}
-
-function bookPurchasing(
-  title,
-  writer,
-  edition,
-  isbn,
-  price,
-  discount,
-  publisher,
-  stock,
-  termOfCredit
-) {
-  let inputUser = 0;
-  const tax = 5;
-  let tempPrice = 0;
-  let amountOfPurchased = 0;
-
-  console.clear();
-  console.log(`===============================================`);
-  console.log(`====================PEMBELIAN==================`);
-  console.log(`===============================================`);
-  console.log(`Judul\t\t\t: ${title}`);
-  console.log(`Penulis\t\t\t: ${writer}`);
-  console.log(`Edisi\t\t\t: ${edition}`);
-  console.log(`Harga\t\t\t: ${price}`);
-  console.log(`Stok\t\t\t: ${stock}`);
-  console.log(`ISBN\t\t\t: ${isbn}`);
-  console.log(`Penerbit\t\t: ${publisher}`);
-  console.log(`Diskon\t\t\t: ${discount}% (-${(price * discount) / 100})`);
-  console.log(`Harga Setelah Diskon\t: ${countDiscount(price, 1, discount)}`);
-  console.log(`===============================================\n`);
-
-  for (let i = 0; i < 100; i++) {
-    inputUser = Math.floor(Math.random() * 10) + 1;
-    console.log(`Jumlah Stok yang Akan Dibeli : ${inputUser}`);
-    if (inputUser > stock) {
-      console.log(`Stok tidak cukup`);
-      continue;
-    } else {
-      stock -= inputUser; // subtraction assignment
-      amountOfPurchased += inputUser; // addition assignment
-      tempPrice += countDiscount(price, inputUser, discount); // addition assignment
-    }
-
-    // show summary
-    console.log(`Jumlah Sudah Dibeli\t: ${amountOfPurchased}`);
-    console.log(`Total Harga\t\t: ${tempPrice}\n`);
-    console.log(`PPN\t\t\t: ${tax}% (+${(tempPrice * tax) / 100})`);
-    console.log(`Total Harga + PPN\t: Rp. ${countTax(tempPrice, tax)},00-\n`);
-    console.log(`*Stok Sekarang\t: ${stock}\n`);
-    console.log(`===============================================`);
-
-    if (stock <= 0) {
-      console.log(`Maaf Tidak Dapat Menambah Pembelian\nStok Tidak Tersedia\n`);
-      break;
-    }
+    originPrice += bookDetails.price * purchasedAmount;
+    discountPrice += countDiscount(
+      bookDetails.price,
+      purchasedAmount,
+      bookDetails.discount
+    ); // addition assignment
+    taxPrice += countTax(discountPrice, tax);
   }
 
   // term of credit
@@ -154,7 +79,7 @@ function bookPurchasing(
   let arrCredit = [];
   for (var i = 0; i < termOfCredit; i++) {
     arrMonth.push(`Bulan ke-${i + 1}`);
-    arrCredit.push(countTax(tempPrice, tax) / termOfCredit);
+    arrCredit.push(taxPrice / termOfCredit);
   }
 
   let objCredit = [];
@@ -172,5 +97,42 @@ function bookPurchasing(
   }
   console.log(`Total\t\t: ${sumCredit}`);
 
-  return countTax(tempPrice,tax);
+  return res.json({
+    bookDetails: {
+      title: bookDetails.title,
+      writer: bookDetails.writer,
+      publisher: bookDetails.publisher,
+      price: bookDetails.price,
+      discountPercent: bookDetails.discount,
+      remainStock: bookDetails.stock - purchasedAmount,
+    },
+    purchasedAmount: purchasedAmount,
+    totalOriginPrice: originPrice,
+    totalDiscountPrice: discountPrice,
+    taxPercent: tax,
+    totalPrice: taxPrice,
+    creditPayment: objCredit,
+  });
+});
+
+app.listen(3000, () => console.log("Api Server is running..."));
+
+function isAuth(req, res, next) {
+  const auth = req.headers.authorization;
+  if (auth === "your_password") {
+    next();
+  } else {
+    res.status(401);
+    res.send("Access forbidden");
+  }
+}
+
+function countDiscount(price, piece, percent) {
+  percent /= 100; // division assignment
+  price -= price * percent; // subtraction assignment
+  return price * piece;
+}
+
+function countTax(price, tax) {
+  return (price *= 1 + tax / 100); // multiplication assignment
 }
