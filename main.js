@@ -2,6 +2,7 @@ const express = require("express");
 // const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const fs = require('fs/promises');
 
 app.use(express.json());
 // app.use(bodyParser.json());
@@ -82,24 +83,62 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
     totalPrice = taxPrice + additionalPrice * termOfCredit;
   }
 
-  return res.status(200).json({
-    bookDetails: {
-      title: bookDetails.title,
-      writer: bookDetails.writer,
-      publisher: bookDetails.publisher,
-      price: bookDetails.price,
-      discountPercent: bookDetails.discount,
-      remainStock: bookDetails.stock - purchasedAmount,
+  // save into object
+  finalData = { 
+    "bookDetails" : {
+      "title": bookDetails.title,
+      "writer": bookDetails.writer,
+      "publisher": bookDetails.publisher,
+      "price": bookDetails.price,
+      "discountPercent": bookDetails.discount,
+      "remainStock": bookDetails.stock - purchasedAmount
     },
-    purchasedAmount: purchasedAmount,
-    totalOriginPrice: originPrice,
-    totalPriceAfterDiscount: discountPrice,
-    taxPercent: tax,
-    totalPriceAfterTax: taxPrice,
-    totalAdditionalPrice: additionalPrice * purchasedAmount,
-    totalPrice: totalPrice,
-    creditPayment: creditPayment,
+    "purchasedAmount": purchasedAmount,
+    "totalOriginPrice": originPrice,
+    "totalPriceAfterDiscount": discountPrice,
+    "taxPercent": tax,
+    "totalPriceAfterTax": taxPrice,
+    "termOfCredit": termOfCredit,
+    "additionalPrice" : additionalPrice,
+    "totalAdditionalPrice": additionalPrice * purchasedAmount,
+    "totalPrice": totalPrice,
+    "creditPayment": creditPayment
+  }; 
+
+  // write object finelData into file text.txt
+  await fs.writeFile(`text.txt`, JSON.stringify(finalData));
+
+  return res.status(200).json({
+    finalData
   });
+});
+
+app.post("/readFileWithAwait", isAuth, async (req, res) => {
+  try {
+    let data = await fs.readFile('text.txt', { encoding: 'utf8' });
+    data = JSON.parse(data)
+    console.log(data)
+    return res.status(200).json({
+      data
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/readFileWithoutAwait", isAuth, (req, res) => {
+  const fs = require('fs');
+  try {
+    let data = fs.readFileSync('text.txt', { encoding: 'utf8' });
+    data = JSON.parse(data)
+    console.log(data);
+    return res.status(200).json({
+      data
+    });
+  } catch (err) {
+    console.error(err);
+  }
+ 
 });
 
 
