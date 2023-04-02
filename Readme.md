@@ -8,3 +8,4 @@
 - [Javascript Day 3](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_3)
 - [Javascript Day 4](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_4)
 - [Javascript Day 5](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_5)
+- [Javascript Day 6](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_6)
