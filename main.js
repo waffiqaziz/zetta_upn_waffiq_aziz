@@ -8,15 +8,17 @@ app.use(express.json());
 // app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/bookPurchasing", isAuth, (req, res) => {
+app.post("/bookPurchasing", isAuth, async (req, res) => {
   let bookDetails = req.body.bookDetails;
   let termOfCredit = req.body.termOfCredit;
   let purchasedAmount = req.body.purchasedAmount;
+  let additionalPrice = req.body.additionalPrice;
 
   const tax = 5;
   let originPrice = 0;
   let discountPrice = 0;
   let taxPrice = 0;
+  let totalPrice = 0;
 
   // check data
   if (!bookDetails.title) {
@@ -61,50 +63,22 @@ app.post("/bookPurchasing", isAuth, (req, res) => {
   }
 
   if (purchasedAmount > bookDetails.stock) {
-    return res.status(400).json({
+    return res.status(200).json({
       error: `Stok Tidak Cukup.`,
     });
   } else {
-    originPrice += bookDetails.price * purchasedAmount;
-    discountPrice += countDiscount(
+    originPrice = bookDetails.price * purchasedAmount;
+    discountPrice = countDiscount(
       bookDetails.price,
       purchasedAmount,
       bookDetails.discount
     ); // addition assignment
-    taxPrice += countTax(discountPrice, tax);
+    taxPrice = countTax(discountPrice, tax);
+    creditPayment = await countCredit(taxPrice, termOfCredit, additionalPrice);
+    totalPrice = taxPrice + additionalPrice * termOfCredit;
   }
 
-  // term of credit
-  let arrMonth = [];
-  let arrCredit = [];
-  for (var i = 0; i < termOfCredit; i++) {
-    arrMonth.push(`Bulan ke-${i + 1}`);
-    arrCredit.push(taxPrice / termOfCredit);
-  }
-
-  let objCredit = [];
-  let remainingBalance = taxPrice;
-  for (var i = 0; i < termOfCredit; i++) {
-  remainingBalance -= arrCredit[i]
-
-    objCredit.push({
-      month: arrMonth[i],
-      credit: arrCredit[i],
-      remainingBalance : remainingBalance
-    });
-  }
-
-  const sumCredit = arrCredit.reduce(
-    (accumulator, currentValue) => accumulator + currentValue
-  );
-
-  // show term of credit
-  for (var i = 0; i < termOfCredit; i++) {
-    console.log(`${objCredit[i].month}\t: ${objCredit[i].credit}`);
-  }
-  console.log(`Total\t\t: ${sumCredit}`);
-
-  return res.json({
+  return res.status(200).json({
     bookDetails: {
       title: bookDetails.title,
       writer: bookDetails.writer,
@@ -115,10 +89,12 @@ app.post("/bookPurchasing", isAuth, (req, res) => {
     },
     purchasedAmount: purchasedAmount,
     totalOriginPrice: originPrice,
-    totalDiscountPrice: discountPrice,
+    totalPriceAfterDiscount: discountPrice,
     taxPercent: tax,
-    totalPrice: taxPrice,
-    creditPayment: objCredit,
+    totalPriceAfterTax: taxPrice,
+    totalAdditionalPrice: additionalPrice * purchasedAmount,
+    totalPrice: totalPrice,
+    creditPayment: creditPayment,
   });
 });
 
@@ -142,4 +118,38 @@ function countDiscount(price, piece, percent) {
 
 function countTax(price, tax) {
   return (price *= 1 + tax / 100); // multiplication assignment
+}
+
+async function countCredit(taxPrice, termOfCredit, additionalPrice) {
+  let arrMonth = [];
+  let arrCredit = [];
+  let arrAdditional = [];
+  let arrCreditPlusAdditional = [];
+  for (var i = 0; i < termOfCredit; i++) {
+    arrMonth.push(i + 1);
+    arrCredit.push(taxPrice / termOfCredit);
+    arrAdditional.push(additionalPrice);
+    arrCreditPlusAdditional.push(arrCredit[i] + additionalPrice);
+  }
+
+  let objCredit = [];
+  let remainingBalance = taxPrice;
+  for (var i = 0; i < termOfCredit; i++) {
+    remainingBalance -= arrCredit[i];
+
+    await objCredit.push({
+      month: arrMonth[i],
+      credit: arrCredit[i],
+      additional: arrAdditional[i],
+      totalCreditMustPay: arrCreditPlusAdditional[i],
+      remainingBalance: remainingBalance,
+    });
+  }
+
+  const sumCredit = arrCredit.reduce(
+    (accumulator, currentValue) => accumulator + currentValue
+  );
+  console.log(`Total\t\t: ${sumCredit}`);
+
+  return objCredit;
 }

@@ -23,12 +23,13 @@
         "title": "Lost In The Jungle",
         "writer": "Yossi Ghinsberg",
         "publisher": "Elex Media Komputindo",
-        "price": 800000,
+        "price": 10000,
         "discount": 10,
         "stock": 3
     },
     "purchasedAmount" : 2,
-    "termOfCredit": 6
+    "termOfCredit": 2,
+    "additionalPrice" : 2000
 }
 ```
 
@@ -39,44 +40,30 @@
         "title": "Lost In The Jungle",
         "writer": "Yossi Ghinsberg",
         "publisher": "Elex Media Komputindo",
-        "price": 800000,
+        "price": 10000,
         "discountPercent": 10,
         "remainStock": 1
     },
     "purchasedAmount": 2,
-    "totalOriginPrice": 1600000,
-    "totalDiscountPrice": 1440000,
+    "totalOriginPrice": 20000,
+    "totalPriceAfterDiscount": 18000,
     "taxPercent": 5,
-    "totalPrice": 1512000,
+    "totalPriceAfterTax": 18900,
+    "totalAdditionalPrice": 4000,
+    "totalPrice": 22900,
     "creditPayment": [
         {
-            "month": "Bulan ke-1",
-            "credit": 252000,
-            "remainingBalance": 1260000
+            "month": 1,
+            "credit": 9450,
+            "additional": 2000,
+            "totalCreditMustPay": 11450,
+            "remainingBalance": 9450
         },
         {
-            "month": "Bulan ke-2",
-            "credit": 252000,
-            "remainingBalance": 1008000
-        },
-        {
-            "month": "Bulan ke-3",
-            "credit": 252000,
-            "remainingBalance": 756000
-        },
-        {
-            "month": "Bulan ke-4",
-            "credit": 252000,
-            "remainingBalance": 504000
-        },
-        {
-            "month": "Bulan ke-5",
-            "credit": 252000,
-            "remainingBalance": 252000
-        },
-        {
-            "month": "Bulan ke-6",
-            "credit": 252000,
+            "month": 2,
+            "credit": 9450,
+            "additional": 2000,
+            "totalCreditMustPay": 11450,
             "remainingBalance": 0
         }
     ]
