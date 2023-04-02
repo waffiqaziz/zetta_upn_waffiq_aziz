@@ -14,6 +14,7 @@
 - stock : Integer
 - termOfCredit : Integer
 - purchasedAmount : Integer
+- additionalPrice : Integer
 
 
 #### Example:
