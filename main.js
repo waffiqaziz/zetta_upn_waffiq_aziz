@@ -1,7 +1,6 @@
 const express = require("express");
 // const bodyParser = require("body-parser");
 const cors = require("cors");
-
 const app = express();
 
 app.use(express.json());
@@ -61,6 +60,11 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
       error: `Purchased Amount is null`,
     });
   }
+  if (!additionalPrice) {
+    return res.status(400).json({
+      error: `Additional Price is null`,
+    });
+  }
 
   if (purchasedAmount > bookDetails.stock) {
     return res.status(200).json({
@@ -97,6 +101,7 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
     creditPayment: creditPayment,
   });
 });
+
 
 app.listen(3000, () => console.log("Api Server is running..."));
 
