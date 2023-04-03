@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const fs = require('fs/promises');
+const { log } = require("console");
 
 app.use(express.json());
 // app.use(bodyParser.json());
@@ -81,18 +82,19 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
     taxPrice = countTax(discountPrice, tax);
     creditPayment = await countCredit(taxPrice, termOfCredit, additionalPrice);
     totalPrice = taxPrice + additionalPrice * termOfCredit;
-  }
-
-  // save into object
-  finalData = { 
-    "bookDetails" : {
+    bookDetails = {
       "title": bookDetails.title,
       "writer": bookDetails.writer,
       "publisher": bookDetails.publisher,
       "price": bookDetails.price,
       "discountPercent": bookDetails.discount,
       "remainStock": bookDetails.stock - purchasedAmount
-    },
+    }
+  }
+
+  // save into object
+  objData = { 
+    "bookDetails" : bookDetails,
     "purchasedAmount": purchasedAmount,
     "totalOriginPrice": originPrice,
     "totalPriceAfterDiscount": discountPrice,
@@ -105,11 +107,30 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
     "creditPayment": creditPayment
   }; 
 
-  // write object finelData into file text.txt
-  await fs.writeFile(`text.txt`, JSON.stringify(finalData));
+  // set
+  let setBooks = new Set()
+  setBooks.add([bookDetails])
+  for(let i  = 1; i < 10; i++){
+    setBooks.add("Buku" + i)
+  }    
+  log(setBooks)
+
+  // map
+  let mapBooks = new Map()
+  mapBooks.set("book1", bookDetails.title)
+  log("\nmap get value")
+  for(let i  = 2; i < 10; i++){
+    mapBooks.set("book"+i, "Buku Siswa " + 1)
+    log(mapBooks.get("book"+i))
+  }
+
+  // write object into file text.txt
+  await fs.writeFile(`text.txt`, JSON.stringify(objData));
 
   return res.status(200).json({
-    finalData
+    object: objData,
+    setBooks: Array.from(setBooks),
+    mapBooks: Array.from(mapBooks.values())
   });
 });
 

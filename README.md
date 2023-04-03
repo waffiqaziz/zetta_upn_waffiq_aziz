@@ -83,7 +83,9 @@ Example Response:
                 "remainingBalance": 0
             }
         ]
-    }
+    },
+    "setBooks": [...],
+    "mapBooks": [...]
 }
 ```
 With the following parameters:
@@ -111,6 +113,8 @@ With the following parameters:
 | `additional`              | integer | Additional price each credit payment.              | 
 | `totalCreditMustPay`      | integer | Total credit payments for the month.               | 
 | `remainingBalance`        | integer | Remaining price to be paid.                        | 
+| `setBooks`                | array   | Array of set.                                      | 
+| `mapBooks`                | array   | Array of map.                                      | 
 
 ## Read File with Await
 Read file endpoint with await
