@@ -6,7 +6,7 @@ Guide step to use this repo:
 1. Clone repo `git clone https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_6.git`
 2. Run `npm install express cors body-parser`
 3. Run `node main.js`
-4. Test using Postman or any platform for building and using APIs. Link : `http://localhost:3000/bookPurchasing` (use JSON body)
+4. Test using Postman or any platform for building and use json body for request.
 5. Set headers key `authorization` and value `your_password`
 
 # 3. Endpoint
