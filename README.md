@@ -127,7 +127,7 @@ Read file endpoint without await
 `http://localhost:3000/readFileWithoutAwait`
 
 ## Read data from MongoDB [GET]
-Read all data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
+Read all data that has been sent from [Book Purchasing](#book-purchasing-post) endpoint  
 `http://localhost:3000/readDataFromMongoDB`
 
 ___Note : All data is for example only___
