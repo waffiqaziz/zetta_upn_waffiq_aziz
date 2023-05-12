@@ -75,8 +75,8 @@ db.profiles.updateOne(
     }
   }
 )
-```ps
-### 4. Delete by Name
 ```
+### 4. Delete by Name
+```ps
 db.profiles.deleteOne({name : "Akbar Ibrahim"})
 ```
