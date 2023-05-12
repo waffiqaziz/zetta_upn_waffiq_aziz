@@ -1,18 +1,20 @@
 # 1. Overview
-This repo is for educational use, learning about Node.js
+This Branch is for educational use, learning about Node.js, MongoDB, and Mongoose.
 
 # 2. Step by Step
 Guide step to use this repo:
-1. Clone repo `git clone https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_7.git`
-2. Run `npm install express cors body-parser`
-3. Run `node main.js`
-4. Test using Postman or any platform for building and use json body for request.
-5. Set headers key `authorization` and value `your_password`
+1. Make sure MongoDB is installed.
+2. Clone repo `git clone https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_7.git`.
+3. Run `npm install express cors body-parser mongoose`.
+4. Run `node main.js`.
+5. Test using Postman or any platform for building and use json body for request.
+6. Set headers key `authorization` and value `your_password`.
+7. Use endpoint that provided below to do a test run.
 
 # 3. Endpoint
 
-## Book Purchasing
-Endpoint for puchasing book
+## Book Purchasing [POST]
+Endpoint for puchasing book, this also will store into MongoDB.
 `http://localhost:3000/bookPurchasing`
 
 Request example:
@@ -116,12 +118,16 @@ With the following parameters:
 | `setBooks`                | array   | Array of set.                                      | 
 | `mapBooks`                | array   | Array of map.                                      | 
 
-## Read File with Await
+## Read File with Await [GET]
 Read file endpoint with await
 `http://localhost:3000/readFileWithAwait`
 
-## Read File without Await
+## Read File without Await [GET]
 Read file endpoint without await
 `http://localhost:3000/readFileWithoutAwait`
+
+## Read data from MongoDB [GET]
+Read all data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
+`http://localhost:3000/readDataFromMongoDB`
 
 ___Note : All data is for example only___

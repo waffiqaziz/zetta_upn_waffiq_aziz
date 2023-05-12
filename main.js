@@ -1,14 +1,24 @@
 const express = require("express");
-// const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 const fs = require('fs/promises');
 const { log } = require("console");
+const mongoose = require(`mongoose`);
+const Books = require(`./Books.model`);
+
+const PORT = 3000;
+
+const dbName = `local`;
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost:27017/" + dbName);
 
 app.use(express.json());
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
+// calculate total price and save it inside MongoDB 
 app.post("/bookPurchasing", isAuth, async (req, res) => {
   let bookDetails = req.body.bookDetails;
   let termOfCredit = req.body.termOfCredit;
@@ -21,7 +31,7 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
   let taxPrice = 0;
   let totalPrice = 0;
 
-  // check data
+  // check data is null/not
   if (!bookDetails.title) {
     return res.status(400).json({
       error: `Title is null`,
@@ -68,11 +78,33 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
     });
   }
 
+  // check if amount is higher that current stock
   if (purchasedAmount > bookDetails.stock) {
     return res.status(200).json({
       error: `Stok Tidak Cukup.`,
     });
   } else {
+
+    // insert into mongo
+    try {
+      const book = await Books.insertMany({
+        bookDetails: {
+          title: bookDetails.title,
+          writer: bookDetails.writer,
+          publisher: bookDetails.publisher,
+          price: bookDetails.price,
+          discount: bookDetails.discount,
+          stock: bookDetails.stock
+        },
+        purchasedAmount : purchasedAmount,
+        termOfCredit: termOfCredit,
+        additionalPrice : additionalPrice
+      });
+      log("Data has been adden to mongo");
+    } catch (err) {
+      console.log(err);
+    }
+
     originPrice = bookDetails.price * purchasedAmount;
     discountPrice = countDiscount(
       bookDetails.price,
@@ -134,7 +166,7 @@ app.post("/bookPurchasing", isAuth, async (req, res) => {
   });
 });
 
-app.post("/readFileWithAwait", isAuth, async (req, res) => {
+app.get("/readFileWithAwait", isAuth, async (req, res) => {
   try {
     let data = await fs.readFile('text.txt', { encoding: 'utf8' });
     data = JSON.parse(data)
@@ -147,7 +179,18 @@ app.post("/readFileWithAwait", isAuth, async (req, res) => {
   }
 });
 
-app.post("/readFileWithoutAwait", isAuth, (req, res) => {
+app.get("/readDataFromMongoDB", isAuth, async (req, res) => {
+  const fs = require('fs');
+  try {
+    const book = await Books.find({});
+    res.send(book);
+    console.log(book);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/readFileWithoutAwait", isAuth, (req, res) => {
   const fs = require('fs');
   try {
     let data = fs.readFileSync('text.txt', { encoding: 'utf8' });
@@ -162,8 +205,7 @@ app.post("/readFileWithoutAwait", isAuth, (req, res) => {
  
 });
 
-
-app.listen(3000, () => console.log("Api Server is running..."));
+app.listen(PORT, () => console.log("Api Server is running on port" + PORT));
 
 function isAuth(req, res, next) {
   const auth = req.headers.authorization;

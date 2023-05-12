@@ -1,0 +1,14 @@
+// insert query with mongo shell
+db.books.insertOne({
+    bookDetails: {
+        title: "Lost In The Jungle",
+        writer: "Yossi Ghinsberg",
+        publisher: "Elex Media Komputindo",
+        price: 30000,
+        discount: 10,
+        stock: 3
+    },
+    purchasedAmount : 2,
+    termOfCredit: 2,
+    additionalPrice : 2000
+})
