@@ -11,3 +11,4 @@
 - [Javascript Day 6](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_6)
 - [Javascript Day 7](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_7)
 - [MongoDB Day 1](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/mongodb_day_1)
+- [MongoDB Day 2](https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/mongodb_day_2)
