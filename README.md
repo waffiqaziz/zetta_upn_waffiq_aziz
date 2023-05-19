@@ -15,7 +15,7 @@ Guide step to use this repo:
 
 ## Book Purchasing [POST]
 Endpoint for puchasing book, this also will store into MongoDB.
-`http://localhost:3000/bookPurchasing`
+`http://localhost:3000/bookPurchasing/purchase`
 
 Request example:
 ```
@@ -24,9 +24,12 @@ Request example:
         "title": "Lost In The Jungle",
         "writer": "Yossi Ghinsberg",
         "publisher": "Elex Media Komputindo",
+        "genre" : [
+            "biography", "autobiography", "guidebook", "travel litarature"
+        ],
         "price": 10000,
         "discount": 10,
-        "stock": 3
+        "stock": 3,
     },
     "purchasedAmount" : 2,
     "termOfCredit": 2,
@@ -40,6 +43,7 @@ With the following parameters:
 | `title`           | string  | required  | Title of the book.                                 |
 | `writer`          | string  | required  | Author                                             |
 | `publisher`       | string  | required  | Book publisher                                     |
+| `genre`           | array   | required  | Genre of book                                      |
 | `price`           | integer | required  | Book price                                         | 
 | `discount`        | integer | required  | Book discount in percent                           | 
 | `stock`           | integer | required  | Available book stock                               | 
@@ -120,14 +124,38 @@ With the following parameters:
 
 ## Read File with Await [GET]
 Read file endpoint with await
-`http://localhost:3000/readFileWithAwait`
+`http://localhost:3000/bookPurchasing/readFileWithAwait`
 
 ## Read File without Await [GET]
 Read file endpoint without await
-`http://localhost:3000/readFileWithoutAwait`
+`http://localhost:3000/bookPurchasing/readFileWithoutAwait`
 
 ## Read data from MongoDB [GET]
 Read all data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
-`http://localhost:3000/readDataFromMongoDB`
+`http://localhost:3000/bookPurchasing/readDataFromMongoDB`
+
+## Read BookShelf Collection [GET]
+Read data from BookShelf collection that has been sent from [Book Purchasing](#book-purchasing) endpoint 
+`http://localhost:3000/bookPurchasing/bookShelf/:idBook`
+*parameter ```idBook``` as number
+Example:
+```
+http://localhost:3000/bookPurchasing/bookShelf/?idBook=64674393998b98bf6b0e7dc8
+```
+Response:
+```
+{
+    "error": 0,
+    "bookShelf": [
+        {
+            "_id": "64674393998b98bf6b0e7dcc",
+            "idBook": [
+                "64674393998b98bf6b0e7dc8"
+            ],
+            "__v": 0
+        }
+    ]
+}
+```
 
 ___Note : All data is for example only___

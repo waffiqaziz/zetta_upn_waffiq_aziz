@@ -18,6 +18,18 @@ var bookDetailsSchema = new Schema({
     required: true,
     unique: false,
   },
+  genre: {
+    type: Array,
+    required: true,
+    unique: false,
+  },
+});
+
+var booksSchema = new Schema({
+  bookDetails: {
+    type: bookDetailsSchema,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,
@@ -32,30 +44,11 @@ var bookDetailsSchema = new Schema({
     type: Number,
     required: true,
     unique: false,
-  },
-});
-
-var booksSchema = new Schema({
-  bookDetails: {
-    type: bookDetailsSchema,
-    required: true,
-  },
-  purchasedAmount: {
-    type: Number,
-    required: true,
-    unique: false,
-  },
-  termOfCredit: {
-    type: Number,
-    required: true,
-    unique: false,
-  },
-  additionalPrice: {
-    type: Number,
-    required: true,
-    unique: false,
   }
 });
 
 //Export the model
 module.exports = mongoose.model("Books", booksSchema);
+
+
+
