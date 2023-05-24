@@ -171,7 +171,7 @@ Update title data book from BookShelf collection based on title
 Read all data from BookShelf collection
 `http://localhost:3000/bookPurchasing/bookShelf/`
 
-## Delete BookShelf Collection [GET]
+## Delete BookShelf Collection [DELETE]
 Delete one book from BookShelf collection based on title
 `http://localhost:3000/bookPurchasing/bookShelf/?title`
 
