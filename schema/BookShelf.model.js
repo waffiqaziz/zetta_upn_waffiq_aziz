@@ -1,5 +1,5 @@
 // Declare the Schema of the Mongo model
-var mongoose = require(`mongoose`);
+import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var bookShelf = new Schema({
@@ -7,11 +7,15 @@ var bookShelf = new Schema({
     type: Array,
     required: true,
     unique: true
+  },
+  books : {
+    type: Array,
+    required: true
   }
 })
 
 //Export the model
-module.exports = mongoose.model("BookShelf", bookShelf);
+export default mongoose.model("BookShelf", bookShelf);
 
 
 

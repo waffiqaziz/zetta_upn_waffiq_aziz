@@ -1,5 +1,5 @@
 // Declare the Schema of the Mongo model
-var mongoose = require(`mongoose`);
+import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var bookDetailsSchema = new Schema({
@@ -26,7 +26,7 @@ var bookDetailsSchema = new Schema({
 });
 
 var booksSchema = new Schema({
-  bookDetails: {
+  book: {
     type: bookDetailsSchema,
     required: true,
   },
@@ -48,7 +48,7 @@ var booksSchema = new Schema({
 });
 
 //Export the model
-module.exports = mongoose.model("Books", booksSchema);
+export default mongoose.model("Books", booksSchema);
 
 
 

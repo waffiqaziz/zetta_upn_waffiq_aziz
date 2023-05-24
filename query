@@ -1,0 +1,297 @@
+// insert books into mongo database for mongoshell
+db.books.insertMany([
+  {
+    bookDetails: {
+      title: "Lost In The Jungle",
+      writer: "Yossi Ghinsberg",
+      publisher: "Elex Media Komputindo",
+      genre: [
+        "Biography",
+        "Autobiography",
+        "Guidebook",
+        "Travel literature",
+      ]  
+    },
+    price: 75000,
+    discount: 5,
+    stock: 45,
+  },
+  {
+    bookDetails: {
+      title: "On Earth We're Briefly Gorgeous",
+      writer: "Ocean Vuong",
+      publisher: "Penguin Press",
+      genre: [
+        "Epistolary novel",
+        "Domestic Fiction",
+      ]  
+    },
+    price: 125000,
+    discount: 10,
+    stock: 54,
+  },
+  {
+    bookDetails: {
+      title: "The Topeka School",
+      writer: "Ben Lerner",
+      publisher: "Farrar, Straus and Giroux",
+      genre: [
+        "Coming-of-age story",
+        "Domestic Fiction",
+        "Bildungsroman",
+      ]  
+    },
+    price: 180000,
+    discount: 8,
+    stock: 34,
+  },
+  {
+    bookDetails: {
+      title: "Once More We Saw Stars: A Memoir",
+      writer: "Jayson Greene",
+      publisher: "Vintage",
+      genre: [
+        "Autobiography ",
+      ]  
+    },
+    price: 120000,
+    discount: 5,
+    stock: 45,
+  },
+  {
+    bookDetails: {
+      title: "The Unwinding of the Miracle: A Memoir of Life, Death, and Everything That Comes After",
+      writer: "Julie Yip-Williams",
+      publisher: "Random House",
+      genre: [
+        "Biography",
+        "Autobiography ",
+      ]  
+    },
+    price: 432000,
+    discount: 15,
+    stock: 156,
+  },
+  {
+    bookDetails: {
+      title: "Ordinary Girls: A Memoir",
+      writer: "Jaquira Díaz",
+      publisher: "Algonquin Books",
+      genre: [
+        "Biography",
+        "Autobiography ",
+      ]  
+    },
+    price: 350000,
+    discount: 7,
+    stock: 56,
+  },
+  {
+    bookDetails: {
+      title: "The Dutch House",
+      writer: "Ann Patchett",
+      publisher: "Harper Perennial",
+      genre: [
+        "Historical FIction",
+        "Domestic Fiction",
+        "Epic Fiction",
+      ]  
+    },
+    price: 190000,
+    discount: 0,
+    stock: 33,
+  },
+  {
+    bookDetails: {
+      title: "Save Me the Plums: My Gourmet Memoir",
+      writer: "Ruth Reichl",
+      publisher: "Random House Publishing Group",
+      genre: [
+        "Cookbook",
+        "Biography",
+        "Autobiography",
+      ]  
+    },
+    price: 465000,
+    discount: 10,
+    stock: 58,
+  },
+  {
+    bookDetails: {
+      title: "Maybe You Should Talk to Someone: A Therapist, Her Therapist, and Our Lives Revealed",
+      writer: "Lori Gottlieb",
+      publisher: "Elex Media Komputindo",
+      genre: [
+        "Biography",
+        "Memoir",
+        "Autobiography",
+      ]  
+    },
+    price: 273000,
+    discount: 0,
+    stock: 39,
+  }]
+);
+
+// insert array of books format JSON
+[
+  {
+  "book": {
+    "title": "Lost In The Jungle",
+    "writer": "Yossi Ghinsberg",
+    "publisher": "Elex Media Komputindo",
+    "genre": [
+      "Biography",
+      "Autobiography",
+      "Guidebook",
+      "Travel literature"
+    ]  
+  },
+  "price": 75000,
+  "discount": 5,
+  "stock": 45
+  },
+  {
+    "book": {
+      "title": "On Earth We're Briefly Gorgeous",
+      "writer": "Ocean Vuong",
+      "publisher": "Penguin Press",
+      "genre": [
+        "Epistolary novel",
+        "Domestic Fiction"
+      ]  
+    },
+    "price": 125000,
+    "discount": 10,
+    "stock": 54
+  },
+  {
+    "book": {
+      "title": "The Topeka School",
+      "writer": "Ben Lerner",
+      "publisher": "Farrar, Straus and Giroux",
+      "genre": [
+        "Coming-of-age story",
+        "Domestic Fiction",
+        "Bildungsroman"
+      ]  
+    },
+    "price": 180000,
+    "discount": 8,
+    "stock": 34
+  },
+  {
+    "book": {
+      "title": "Once More We Saw Stars: A Memoir",
+      "writer": "Jayson Greene",
+      "publisher": "Vintage",
+      "genre": [
+        "Autobiography "
+      ]  
+    },
+    "price": 120000,
+    "discount": 5,
+    "stock": 45
+  },
+  {
+    "book": {
+      "title": "The Unwinding of the Miracle: A Memoir of Life, Death, and Everything That Comes After",
+      "writer": "Julie Yip-Williams",
+      "publisher": "Random House",
+      "genre": [
+        "Biography",
+        "Autobiography "
+      ]  
+    },
+    "price": 432000,
+    "discount": 15,
+    "stock": 156
+  },
+  {
+    "book": {
+      "title": "Ordinary Girls: A Memoir",
+      "writer": "Jaquira Díaz",
+      "publisher": "Algonquin Books",
+      "genre": [
+        "Biography",
+        "Autobiography "
+      ]  
+    },
+    "price": 350000,
+    "discount": 7,
+    "stock": 56
+  },
+  {
+    "book": {
+      "title": "The Dutch House",
+      "writer": "Ann Patchett",
+      "publisher": "Harper Perennial",
+      "genre": [
+        "Historical FIction",
+        "Domestic Fiction",
+        "Epic Fiction"
+      ]  
+    },
+    "price": 190000,
+    "discount": 0,
+    "stock": 33
+  },
+  {
+    "book": {
+      "title": "Save Me the Plums: My Gourmet Memoir",
+      "writer": "Ruth Reichl",
+      "publisher": "Random House Publishing Group",
+      "genre": [
+        "Cookbook",
+        "Biography",
+        "Autobiography"
+      ]  
+    },
+    "price": 465000,
+    "discount": 10,
+    "stock": 58
+  },
+  {
+    "book": {
+      "title": "Maybe You Should Talk to Someone: A Therapist, Her Therapist, and Our Lives Revealed",
+      "writer": "Lori Gottlieb",
+      "publisher": "Elex Media Komputindo",
+      "genre": [
+        "Biography",
+        "Memoir",
+        "Autobiography"
+      ]  
+    },
+    "price": 273000,
+    "discount": 0,
+    "stock": 39
+  }
+]
+
+// insert a book format JSON
+{
+  "book": {
+    "title": "The Topeka School",
+    "writer": "Ben Lerner",
+    "publisher": "Farrar, Straus and Giroux",
+    "genre": [
+      "Coming-of-age story",
+      "Domestic Fiction",
+      "Bildungsroman"
+    ]  
+  },
+  "price": 180000,
+  "discount": 8,
+  "stock": 34
+}
+
+// insert into bookshelf for mongoshell
+
+
+// update push bookshelf without 
+db.bookshelves.updateOne(
+{ _id: ObjectId("646cdd12dda86b6cf9f606c3") }, 
+{ $addToSet: { idBook: ObjectId("646cdd12dda86b6cf9f60611") } })
+
+db.bookshelves.find().limit(1).size();
+
