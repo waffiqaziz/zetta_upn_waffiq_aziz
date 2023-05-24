@@ -3,6 +3,7 @@ This Branch is for educational use, learning about Node.js, MongoDB, and Mongoos
 
 # 2. Step by Step
 Guide step to use this repo:
+
 1. Make sure MongoDB is installed.
 2. Clone repo `git clone https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_7.git`.
 3. Run `npm install express cors body-parser mongoose`.
@@ -12,12 +13,12 @@ Guide step to use this repo:
 7. Use endpoint that provided below to do a test run.
 
 # 3. Endpoint
-
 ## Book Purchasing [POST]
 Endpoint for puchasing book, this also will store into MongoDB.
 `http://localhost:3000/bookPurchasing/purchase`
 
 Request example:
+
 ```
 {
     "bookDetails": {
@@ -36,23 +37,24 @@ Request example:
     "additionalPrice" : 2000
 }
 ```
-With the following parameters:
-| Parameter         | Type    | Required? | Description                                        |
-| ------------------|---------|-----------|----------------------------------------------------|
-| `bookDetails`     | object  | required  | Object contain certain information about the book. |
-| `title`           | string  | required  | Title of the book.                                 |
-| `writer`          | string  | required  | Author                                             |
-| `publisher`       | string  | required  | Book publisher                                     |
-| `genre`           | array   | required  | Genre of book                                      |
-| `price`           | integer | required  | Book price                                         | 
-| `discount`        | integer | required  | Book discount in percent                           | 
-| `stock`           | integer | required  | Available book stock                               | 
-| `purchasedAmount` | integer | required  | The number of books to be purchased                | 
-| `termOfCredit`    | integer | required  | Credit term                                        |
-| `additionalPrice` | integer | required  | Additional credit payments                         | 
 
+With the following parameters:
+| Parameter | Type | Required? | Description |
+| ------------------|---------|-----------|----------------------------------------------------|
+| `bookDetails` | object | required | Object contain certain information about the book. |
+| `title` | string | required | Title of the book. |
+| `writer` | string | required | Author |
+| `publisher` | string | required | Book publisher |
+| `genre` | array | required | Genre of book |
+| `price` | integer | required | Book price |
+| `discount` | integer | required | Book discount in percent |
+| `stock` | integer | required | Available book stock |
+| `purchasedAmount` | integer | required | The number of books to be purchased |
+| `termOfCredit` | integer | required | Credit term |
+| `additionalPrice` | integer | required | Additional credit payments |
 
 Example Response:
+
 ```
 {
     "finalData": {
@@ -94,33 +96,34 @@ Example Response:
     "mapBooks": [...]
 }
 ```
+
 With the following parameters:
-| Parameter                 | Type    | Description                                        |
+| Parameter | Type | Description |
 | --------------------------|---------|----------------------------------------------------|
-| `bookDetails`             | object  | Object contain certain information about the book. |
-| `title`                   | string  | Title of the book.                                 |
-| `writer`                  | string  | Author.                                            |
-| `publisher`               | string  | Book publisher.                                    |
-| `price`                   | integer | Book price.                                        | 
-| `discountPercent`         | integer | Book discount in percent.                          | 
-| `remainStock`             | integer | Available book stock now.                          | 
-| `purchasedAmount`         | integer | Number of books purchased.                         | 
-| `totalOriginPrice`        | integer | Book origin price.                                 |
-| `totalPriceAfterDiscount` | integer | Total book price after discount.                   |
-| `taxPercent`              | integer | Tax percent.                                       | 
-| `totalPriceAfterTax`      | integer | Total book price after discount and tax.           | 
-| `termOfCredit`            | integer | Credit term.                                       | 
-| `additionalPrice`         | integer | Aditional price for credit term.                   | 
-| `totalAdditionalPrice`    | integer | Total Aditional price for credit term.             | 
-| `totalPrice`              | integer | Total price to be paids.                           | 
-| `creditPayment`           | object  | Object contain information about credit term.      | 
-| `month`                   | integer | Term credit payment month.                         | 
-| `credit`                  | integer | Amount credit payment.                             | 
-| `additional`              | integer | Additional price each credit payment.              | 
-| `totalCreditMustPay`      | integer | Total credit payments for the month.               | 
-| `remainingBalance`        | integer | Remaining price to be paid.                        | 
-| `setBooks`                | array   | Array of set.                                      | 
-| `mapBooks`                | array   | Array of map.                                      | 
+| `bookDetails` | object | Object contain certain information about the book. |
+| `title` | string | Title of the book. |
+| `writer` | string | Author. |
+| `publisher` | string | Book publisher. |
+| `price` | integer | Book price. |
+| `discountPercent` | integer | Book discount in percent. |
+| `remainStock` | integer | Available book stock now. |
+| `purchasedAmount` | integer | Number of books purchased. |
+| `totalOriginPrice` | integer | Book origin price. |
+| `totalPriceAfterDiscount` | integer | Total book price after discount. |
+| `taxPercent` | integer | Tax percent. |
+| `totalPriceAfterTax` | integer | Total book price after discount and tax. |
+| `termOfCredit` | integer | Credit term. |
+| `additionalPrice` | integer | Aditional price for credit term. |
+| `totalAdditionalPrice` | integer | Total Aditional price for credit term. |
+| `totalPrice` | integer | Total price to be paids. |
+| `creditPayment` | object | Object contain information about credit term. |
+| `month` | integer | Term credit payment month. |
+| `credit` | integer | Amount credit payment. |
+| `additional` | integer | Additional price each credit payment. |
+| `totalCreditMustPay` | integer | Total credit payments for the month. |
+| `remainingBalance` | integer | Remaining price to be paid. |
+| `setBooks` | array | Array of set. |
+| `mapBooks` | array | Array of map. |
 
 ## Read File with Await [GET]
 Read file endpoint with await
@@ -130,32 +133,18 @@ Read file endpoint with await
 Read file endpoint without await
 `http://localhost:3000/bookPurchasing/readFileWithoutAwait`
 
-## Read data from MongoDB [GET]
-Read all data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
-`http://localhost:3000/bookPurchasing/readDataFromMongoDB`
+## Insert data into Book Collection [POST]
+Insert books data into book collection, for seasier use [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
+`http://localhost:3000/bookPurchasing/books`
+
+## Read data from Book Collection [GET]
+Read books data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
+`http://localhost:3000/bookPurchasing/books`
 
 ## Read BookShelf Collection [GET]
-Read data from BookShelf collection that has been sent from [Book Purchasing](#book-purchasing) endpoint 
+Read data from BookShelf collection that has been sent from [Book Purchasing](#book-purchasing) endpoint based on ID book
 `http://localhost:3000/bookPurchasing/bookShelf/:idBook`
-*parameter ```idBook``` as number
-Example:
-```
-http://localhost:3000/bookPurchasing/bookShelf/?idBook=64674393998b98bf6b0e7dc8
-```
-Response:
-```
-{
-    "error": 0,
-    "bookShelf": [
-        {
-            "_id": "64674393998b98bf6b0e7dcc",
-            "idBook": [
-                "64674393998b98bf6b0e7dc8"
-            ],
-            "__v": 0
-        }
-    ]
-}
-```
+*parameter `idBook` as number
 
-___Note : All data is for example only___
+
+**_Note : All data is for example only_**
