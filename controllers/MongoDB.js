@@ -126,8 +126,8 @@ export const bookPurchase = async (req, res) => {
     }
 
     // insert ID into bookshelf collection
+    // already created
     if (alreadyCreated > 0) {
-      // already created
       // get latest id bookshell
       var bookShelfID = 0;
       try {
@@ -158,6 +158,7 @@ export const bookPurchase = async (req, res) => {
       // not yet created
       try {
         const book = {
+          id: bookID._id,
           title: bookDetails.title,
           writer: bookDetails.writer,
           publisher: bookDetails.publisher,
@@ -325,11 +326,242 @@ export const readBookCollection = async (req, res) => {
     console.log(book);
   } catch (err) {
     console.log(err);
+    res.send({
+      error: 1,
+      message: err,
+    });
   }
 };
 
-export const updateBookCollection = async (req, res) => {};
-export const deleteBookCollection = async (req, res) => {};
+export const insertBookShelfCollection = async (req, res) => {
+  let book = req.body.book;
+  // check data is null/not
+  if (!book.title) {
+    return res.status(400).json({
+      error: `Title is null`,
+    });
+  }
+  if (!book.writer) {
+    return res.status(400).json({
+      error: `Writer is null`,
+    });
+  }
+  if (!book.publisher) {
+    return res.status(400).json({
+      error: `Publisher is null`,
+    });
+  }
+  if (!book.genre) {
+    return res.status(400).json({
+      error: `Genre is null`,
+    });
+  }
+
+  // create book obj
+  var bookID = new mongoose.Types.ObjectId();
+  let bookData = {
+    _id: null,
+    title: book.title,
+    writer: book.writer,
+    publisher: book.publisher,
+    genre: book.genre,
+  };
+  bookData._id = bookID;
+
+  // check if bookshelf already created or not
+  let alreadyCreated = 0;
+  try {
+    alreadyCreated = await BookShelf.countDocuments();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+
+  if (alreadyCreated > 0) {
+    var bookShelfID = 0;
+    try {
+      bookShelfID = await BookShelf.findOne();
+      log("ID BookShelf : " + bookShelfID._id);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: 1,
+        message: err,
+      });
+    }
+
+    // update bookshelf without overwrite
+    try {
+      const bookShelf = await BookShelf.updateOne(
+        { _id: bookShelfID._id },
+        { $addToSet: { idBook: bookID, books: bookData } }
+      );
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: 1,
+        message: err,
+      });
+    }
+  } else {
+    // not yet created
+    try {
+      const bookShelf = await BookShelf.insertMany({
+        idBook: bookID,
+        books: bookData,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: 1,
+        message: err,
+      });
+    }
+  }
+
+  return res.status(200).json({
+    error: 0,
+    message: "Success Added",
+  });
+};
+
+export const readBookShelfCollection = async (req, res) => {
+  try {
+    const bookShelf = await BookShelf.find({});
+    if (bookShelf.length == 0) {
+      res.send({
+        error: 1,
+        message: "No Data",
+      });
+    } else {
+      res.send({
+        error: 0,
+        bookShelf: bookShelf,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const updateBookShelfCollection = async (req, res) => {
+  const titleIdentifier = req.query.titleIdentifier;
+  const titleChanged = req.query.titleChanged;
+  if (!titleIdentifier || !titleChanged) {
+    return res.status(400).json({
+      error: `Parameters are missing`,
+    });
+  }
+  try {
+    const response = await BookShelf.updateOne(
+      { "books.title": titleIdentifier },
+      { $set: { "books.$.title": titleChanged } }
+    );
+  } catch (err) {
+    console.log(err);
+    res.send({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const deleteBookShelfCollection = async (req, res) => {
+  const title = req.query.title;
+  if (!title) {
+    return res.status(400).json({
+      error: `Title are missing`,
+    });
+  }
+
+  // check if thers document on collection/not
+  let alreadyCreated = 0;
+  try {
+    alreadyCreated = await BookShelf.countDocuments();
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+
+  // find book data based on title and save inside variable {response}
+  var response = undefined;
+  if (alreadyCreated > 0) {
+    try {
+      response = await BookShelf.findOne(
+        { "books.title": title },
+        { "books.$": 1 }
+      );
+      const dataBook = response.books;
+      dataBook.forEach(function(record) {
+        response = record._id;
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: 1,
+        message: err,
+      });
+    }
+  } else {
+    return res.status(200).json({
+      error: 0,
+      message: "No data can be deleted",
+    });
+  }
+
+  // check if book has found/noot
+  if (response == null) {
+    return res.send({
+      error: 1,
+      message: "No data found",
+    });
+  } else {
+    try {
+      // delete ID data from array of id (idBook) using id from {response}
+      const temp = await BookShelf.updateOne(
+        { idBook: response },
+        { $pull: { idBook: response } }
+      );
+      // log("delete ID : "+ temp);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: 1,
+        message: err,
+      });
+    }
+  }
+
+  // delete book data from array of book (books)
+  try {
+    const temp = await BookShelf.updateOne(
+      { "books.title": title },
+      { $pull: { books: { title: title } } }
+    );
+    // log("delete Book : "+ temp);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+
+  return res.status(200).json({
+    error: 0,
+    message: "Success",
+  });
+};
 
 export const filterBookShelfID = async (req, res) => {
   var id = req.query.idBook;

@@ -120,7 +120,7 @@ db.books.insertMany([
     bookDetails: {
       title: "Maybe You Should Talk to Someone: A Therapist, Her Therapist, and Our Lives Revealed",
       writer: "Lori Gottlieb",
-      publisher: "Elex Media Komputindo",
+      publisher: "Houghton Mifflin Harcourt",
       genre: [
         "Biography",
         "Memoir",
@@ -255,7 +255,7 @@ db.books.insertMany([
     "book": {
       "title": "Maybe You Should Talk to Someone: A Therapist, Her Therapist, and Our Lives Revealed",
       "writer": "Lori Gottlieb",
-      "publisher": "Elex Media Komputindo",
+      "publisher": "Houghton Mifflin Harcourt",
       "genre": [
         "Biography",
         "Memoir",
@@ -284,4 +284,3 @@ db.books.insertMany([
   "discount": 8,
   "stock": 34
 }
-

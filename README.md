@@ -134,17 +134,50 @@ Read file endpoint without await
 `http://localhost:3000/bookPurchasing/readFileWithoutAwait`
 
 ## Insert data into Book Collection [POST]
-Insert books data into book collection, for seasier use [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
+Insert books data into book collection, to make it easier use this [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
 `http://localhost:3000/bookPurchasing/books`
 
 ## Read data from Book Collection [GET]
 Read books data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
 `http://localhost:3000/bookPurchasing/books`
 
-## Read BookShelf Collection [GET]
-Read data from BookShelf collection that has been sent from [Book Purchasing](#book-purchasing) endpoint based on ID book
-`http://localhost:3000/bookPurchasing/bookShelf/:idBook`
-*parameter `idBook` as number
+## Insert Into BookShelf Collection [POST]
+Insert data into BookShelf collection, to make it easier use this [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
+`http://localhost:3000/bookPurchasing/bookShelf/`
+Example Body:
+```
+ {
+    "book": {
+      "title": "The Topeka School",
+      "writer": "Ben Lerner",
+      "publisher": "Farrar, Straus and Giroux",
+      "genre": [
+        "Coming-of-age story",
+        "Domestic Fiction",
+        "Bildungsroman"
+      ]  
+    },
+    "price": 180000,
+    "discount": 8,
+    "stock": 34
+  }
+```
 
+## Update BookShelf Collection [PUT]
+Update title data book from BookShelf collection based on title
+`http://localhost:3000/bookPurchasing/bookShelf/?titleIdentifier&titleChanged`
+
+## Read All BookShelf Collection [GET]
+Read all data from BookShelf collection
+`http://localhost:3000/bookPurchasing/bookShelf/`
+
+## Delete BookShelf Collection [GET]
+Delete one book from BookShelf collection based on title
+`http://localhost:3000/bookPurchasing/bookShelf/?title`
+
+## Read BookShelf Collection [GET]
+Read data from BookShelf collection based on ID book
+`http://localhost:3000/bookPurchasing/bookShelf/?idBook`
+*parameter `idBook` as number
 
 **_Note : All data is for example only_**
