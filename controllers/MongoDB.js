@@ -684,3 +684,64 @@ export const listGenreBookShelfCollection = async (req, res) => {
     });
   }
 };
+
+export const listGenreEachBook = async (req, res) => {
+  try {
+    const bookShelf = await BookShelf.aggregate([
+      { $project: { genreEachBook: "$books.genre" } },
+      {
+        $addFields: {
+          totalBook: { $size: "$genre" },
+        },
+      },
+    ]);
+    if (bookShelf.length == 0) {
+      res.send({
+        error: 1,
+        message: "No Data",
+      });
+    } else {
+      res.send({
+        error: 0,
+        genreEachBook: bookShelf,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const listGenreEachBookUnwind = async (req, res) => {
+  try {
+    const bookShelf = await BookShelf.aggregate([
+      { $unwind: "$books" },
+      { $project: { title: "$books.title", genre: "$books.genre" } },
+      {
+        $addFields: {
+          totalGenre: { $size: "$genre" },
+        },
+      },
+    ]);
+    if (bookShelf.length == 0) {
+      res.send({
+        error: 1,
+        message: "No Data",
+      });
+    } else {
+      res.send({
+        error: 0,
+        genreEachBook: bookShelf,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      error: 1,
+      message: err,
+    });
+  }
+};
