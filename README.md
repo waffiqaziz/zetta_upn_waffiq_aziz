@@ -142,7 +142,7 @@ Read books data that has been sent from [Book Purchasing](#book-purchasing) endp
 `http://localhost:3000/bookPurchasing/books`
 
 ## Insert Into BookShelf Collection [POST]
-Insert data into BookShelf collection, to make it easier use this [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
+Insert data into bookShelf collection, to make it easier use this [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
 `http://localhost:3000/bookPurchasing/bookShelf/`
 Example Body:
 ```
@@ -164,20 +164,32 @@ Example Body:
 ```
 
 ## Update BookShelf Collection [PUT]
-Update title data book from BookShelf collection based on title
+Update title data book from bookShelf collection based on title
 `http://localhost:3000/bookPurchasing/bookShelf/?titleIdentifier&titleChanged`
 
 ## Read All BookShelf Collection [GET]
-Read all data from BookShelf collection
+Read all data from bookShelf collection
 `http://localhost:3000/bookPurchasing/bookShelf/`
 
 ## Delete BookShelf Collection [GET]
-Delete one book from BookShelf collection based on title
+Delete one book from bookShelf collection based on title
 `http://localhost:3000/bookPurchasing/bookShelf/?title`
 
 ## Read BookShelf Collection [GET]
-Read data from BookShelf collection based on ID book
+Read data from bookShelf collection based on ID book
 `http://localhost:3000/bookPurchasing/bookShelf/?idBook`
 *parameter `idBook` as number
+
+## Filter by Title and Genre BookShelf Collection [GET]
+Filter bookShelf collection based on title and genre
+`http://localhost:3000/bookPurchasing/bookShelf/filter/?title&genre`
+
+## Update BookShelf Collection [PUT]
+Update writer of book based on genre of book
+`http://localhost:3000/bookPurchasing/bookShelf/filter/?genreIdentifier&writer`
+
+## Get List Genre of BookShelf Collection [GET]
+Read genre inside bookshelf collection
+`http://localhost:3000/bookPurchasing/bookShelf/listGenre/`
 
 **_Note : All data is for example only_**

@@ -502,7 +502,7 @@ export const deleteBookShelfCollection = async (req, res) => {
         { "books.$": 1 }
       );
       const dataBook = response.books;
-      dataBook.forEach(function(record) {
+      dataBook.forEach(function (record) {
         response = record._id;
       });
     } catch (err) {
@@ -590,5 +590,97 @@ export const filterBookShelfID = async (req, res) => {
     console.log(book);
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const filterBookShelfCollection = async (req, res) => {
+  const title = req.query.title;
+  const genre = req.query.genre;
+
+  if (!title || !genre) {
+    return res.status(400).json({
+      error: `Parameters are missing`,
+    });
+  }
+  try {
+    const data = await BookShelf.find(
+      { books: { $elemMatch: { genre: genre, title: title } } },
+      {
+        "books.$": 1,
+      }
+    );
+
+    return res.status(200).json({
+      error: 1,
+      book: data,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const filterArrayBookShelfCollection = async (req, res) => {
+  const genre = req.query.genreIdentifier;
+  const writer = req.query.writer;
+
+  if (!writer || !genre) {
+    return res.status(400).json({
+      error: `Parameters are missing`,
+    });
+  }
+  try {
+    const data = await BookShelf.updateMany(
+      {},
+      {
+        $set: {
+          "books.$[elem].writer": writer,
+        },
+      },
+      {
+        arrayFilters: [
+          {
+            "elem.genre": genre,
+          },
+        ],
+      }
+    );
+
+    return res.status(200).json({
+      error: 1,
+      book: data,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const listGenreBookShelfCollection = async (req, res) => {
+  try {
+    const bookShelf = await BookShelf.distinct("books.genre");
+    if (bookShelf.length == 0) {
+      res.send({
+        error: 1,
+        message: "No Data",
+      });
+    } else {
+      res.send({
+        error: 0,
+        genre: bookShelf,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.send({
+      error: 1,
+      message: err,
+    });
   }
 };

@@ -79,7 +79,7 @@ db.books.insertMany([
       publisher: "Algonquin Books",
       genre: [
         "Biography",
-        "Autobiography ",
+        "Autobiography",
       ]  
     },
     price: 350000,

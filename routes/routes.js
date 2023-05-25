@@ -12,6 +12,9 @@ import {
   readBookShelfCollection,
   updateBookShelfCollection,
   deleteBookShelfCollection,
+  filterBookShelfCollection,
+  filterArrayBookShelfCollection,
+  listGenreBookShelfCollection,
   bookPurchase,
   filterBookShelfID,
 } from "../controllers/MongoDB.js";
@@ -42,5 +45,15 @@ router.delete("/bookPurchasing/bookShelf/", isAuth, deleteBookShelfCollection);
 
 // find array list BookID from BookShelf by ID
 router.get("/bookPurchasing/bookShelf/", isAuth, filterBookShelfID);
+
+// filtering with elemMatch genre and title book for bookshelf collection 
+router.get("/bookPurchasing/bookShelf/filter/", isAuth, filterBookShelfCollection);
+
+// update writer of book collection based on genre of book using filterArray
+router.put("/bookPurchasing/bookShelf/filter/", isAuth, filterArrayBookShelfCollection);
+
+// get list genre of book
+router.get("/bookPurchasing/bookShelf/listGenre/", isAuth, listGenreBookShelfCollection);
+
 
 export default router;
