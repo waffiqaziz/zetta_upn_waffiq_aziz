@@ -194,6 +194,6 @@ Read genre inside bookshelf collection
 
 ## Get List Genre Each Book Inside BookShelf Collection [GET]
 Get title and genre field each book inside bookshelf collection and get totalGenre each book
-`http://localhost:3000/bookPurchasing/bookShelf/listGenreEachBook/`
+`http://localhost:3000/bookPurchasing/bookShelf/splitGenreEachBook/`
 
 **_Note : All data is for example only_**
