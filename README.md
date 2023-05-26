@@ -5,7 +5,7 @@ This Branch is for educational use, learning about Node.js, MongoDB, and Mongoos
 Guide step to use this repo:
 
 1. Make sure MongoDB is installed.
-2. Clone repo `git clone https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_7.git`.
+2. Clone repo `git clone `https://github.com/waffiqaziz/zetta_upn_waffiq_aziz/tree/javascript_day_7.git`.
 3. Run `npm install express cors body-parser mongoose`.
 4. Run `node main.js`.
 5. Test using Postman or any platform for building and use json body for request.
@@ -15,7 +15,7 @@ Guide step to use this repo:
 # 3. Endpoint
 ## Book Purchasing [POST]
 Endpoint for puchasing book, this also will store into MongoDB.
-`http://localhost:3000/bookPurchasing/purchase`
+```http://localhost:3000/bookPurchasing/purchase```
 
 Request example:
 
@@ -127,23 +127,23 @@ With the following parameters:
 
 ## Read File with Await [GET]
 Read file endpoint with await
-`http://localhost:3000/bookPurchasing/readFileWithAwait`
+```http://localhost:3000/bookPurchasing/readFileWithAwait```
 
 ## Read File without Await [GET]
 Read file endpoint without await
-`http://localhost:3000/bookPurchasing/readFileWithoutAwait`
+```http://localhost:3000/bookPurchasing/readFileWithoutAwait```
 
 ## Insert data into Book Collection [POST]
 Insert books data into book collection, to make it easier use this [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
-`http://localhost:3000/bookPurchasing/books`
+```http://localhost:3000/bookPurchasing/books```
 
 ## Read data from Book Collection [GET]
 Read books data that has been sent from [Book Purchasing](#book-purchasing) endpoint  
-`http://localhost:3000/bookPurchasing/books`
+```http://localhost:3000/bookPurchasing/books```
 
 ## Insert Into BookShelf Collection [POST]
 Insert data into bookShelf collection, to make it easier use this [query](https://raw.githubusercontent.com/waffiqaziz/zetta_upn_waffiq_aziz/mongodb_day_3/query), JSON format.
-`http://localhost:3000/bookPurchasing/bookShelf/`
+```http://localhost:3000/bookPurchasing/bookShelf/```
 Example Body:
 ```
  {
@@ -165,35 +165,52 @@ Example Body:
 
 ## Update BookShelf Collection [PUT]
 Update title data book from bookShelf collection based on title
-`http://localhost:3000/bookPurchasing/bookShelf/?titleIdentifier&titleChanged`
+```http://localhost:3000/bookPurchasing/bookShelf/?titleIdentifier&titleChanged```
 
 ## Read All BookShelf Collection [GET]
 Read all data from bookShelf collection
-`http://localhost:3000/bookPurchasing/bookShelf/`
+```http://localhost:3000/bookPurchasing/bookShelf/```
 
 ## Delete BookShelf Collection [GET]
 Delete one book from bookShelf collection based on title
-`http://localhost:3000/bookPurchasing/bookShelf/?title`
+```http://localhost:3000/bookPurchasing/bookShelf/?title```
 
 ## Read BookShelf Collection [GET]
 Read data from bookShelf collection based on ID book
-`http://localhost:3000/bookPurchasing/bookShelf/?idBook`
+```http://localhost:3000/bookPurchasing/bookShelf/?idBook```
 *parameter `idBook` as number
 
 ## Filter by Title and Genre BookShelf Collection [GET]
 Filter bookShelf collection based on title and genre
-`http://localhost:3000/bookPurchasing/bookShelf/filter/?title&genre`
+```http://localhost:3000/bookPurchasing/bookShelf/filter/?title&genre```
 
 ## Update BookShelf Collection [PUT]
 Update writer of book based on genre of book
-`http://localhost:3000/bookPurchasing/bookShelf/filter/?genreIdentifier&writer`
+```http://localhost:3000/bookPurchasing/bookShelf/filter/?genreIdentifier&writer```
 
 ## Get List Genre Inside BookShelf Collection [GET]
 Read genre inside bookshelf collection
-`http://localhost:3000/bookPurchasing/bookShelf/listGenre/`
+```http://localhost:3000/bookPurchasing/bookShelf/listGenre/```
 
 ## Get List Genre Each Book Inside BookShelf Collection [GET]
 Get title and genre field each book inside bookshelf collection and get totalGenre each book
-`http://localhost:3000/bookPurchasing/bookShelf/splitGenreEachBook/`
+```http://localhost:3000/bookPurchasing/bookShelf/splitGenreEachBook/```
+
+## Get List Genre Each Book Inside BookShelf Collection [GET]
+Get title and genre field each book inside bookshelf collection and get totalGenre each book based on title
+```http://localhost:3000/bookPurchasing/bookShelf/genreOfBook/?title```
+
+## Sort List of Book Titles [GET]
+Get an ordered list of book titles from bookshelf collection
+```http://localhost:3000/bookPurchasing/bookShelf/sortOfBookTitle/?genre```
+
+## Sort List of Book Titles From BookShelf Collection [GET]
+Get an ordered list of book titles from bookshelf collection
+```http://localhost:3000/bookPurchasing/bookShelf/sortOfBookTitle/?genre```
+
+## Sort List of Book Titles From BookShelf Collection and Books Collection[GET]
+Get an ordered list of book titles from bookshelf collection combined with book collection
+```http://localhost:3000/bookPurchasing/bookShelf/sortOfBookTitleLookup/?genre```
+
 
 **_Note : All data is for example only_**

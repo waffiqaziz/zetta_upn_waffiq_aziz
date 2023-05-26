@@ -17,6 +17,8 @@ import {
   listGenreBookShelfCollection,
   listGenreEachBook,
   listGenreEachBookUnwind,
+  sortOfBookTitle,
+  sortOfBookTitleLookup,
   bookPurchase,
   filterBookShelfID,
 } from "../controllers/MongoDB.js";
@@ -57,10 +59,16 @@ router.put("/bookPurchasing/bookShelf/filter/", isAuth, filterArrayBookShelfColl
 // get list genre of book
 router.get("/bookPurchasing/bookShelf/listGenre/", isAuth, listGenreBookShelfCollection);
 
-//  list genre each book using projection and totalBook using addField
+// list genre each book using projection and totalBook using addField
 router.get("/bookPurchasing/bookShelf/genreEachBook/", isAuth, listGenreEachBook);
 
-//  list book including title and list of genre with projection, totalGenre using addField and split using unwind
+// list book including title and list of genre with projection, totalGenre using addField and split using unwind
 router.get("/bookPurchasing/bookShelf/splitGenreEachBook/", isAuth, listGenreEachBookUnwind);
 
+// list of books sorted by title, with genre according to parameters, displaying genre totals, 
+// and column publisher-author using concat
+router.get("/bookPurchasing/bookShelf/sortOfBookTitle/", isAuth, sortOfBookTitle);
+
+// Same as above sortOfBookTitle with addion data from books collection
+router.get("/bookPurchasing/bookShelf/sortOfBookTitleLookup/", isAuth, sortOfBookTitleLookup);
 export default router;

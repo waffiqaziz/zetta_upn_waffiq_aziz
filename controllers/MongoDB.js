@@ -23,59 +23,70 @@ export const bookPurchase = async (req, res) => {
   // check data is null/not
   if (!bookDetails.title) {
     return res.status(400).json({
-      error: `Title is null`,
+      error: 1,
+      message: `Title is null`,
     });
   }
   if (!bookDetails.writer) {
     return res.status(400).json({
-      error: `Writer is null`,
+      error: 1,
+      message: `Writer is null`,
     });
   }
   if (!bookDetails.price) {
     return res.status(400).json({
-      error: `Price is null`,
+      error: 1,
+      message: `Price is null`,
     });
   }
   if (!bookDetails.discount) {
     return res.status(400).json({
-      error: `Discount is null`,
+      error: 1,
+      message: `Discount is null`,
     });
   }
   if (!bookDetails.publisher) {
     return res.status(400).json({
-      error: `Publisher is null`,
+      error: 1,
+      message: `Publisher is null`,
     });
   }
   if (!bookDetails.genre) {
     return res.status(400).json({
-      error: `Genre is null`,
+      error: 1,
+      message: `Genre is null`,
     });
   }
   if (!bookDetails.stock) {
     return res.status(400).json({
-      error: `Stock is null`,
+      error: 1,
+      message: `Stock is null`,
     });
   }
   if (!termOfCredit) {
     return res.status(400).json({
-      error: `Term of Credit is null`,
+      error: 1,
+      message: `Term of Credit is null`,
     });
   }
   if (!purchasedAmount) {
     return res.status(400).json({
-      error: `Purchased Amount is null`,
+      error: 1,
+      message: `Purchased Amount is null`,
     });
   }
   if (!additionalPrice) {
     return res.status(400).json({
-      error: `Additional Price is null`,
+      error: 1,
+      message: `Additional Price is null`,
     });
   }
 
   // check if amount is higher that current stock
   if (purchasedAmount > bookDetails.stock) {
     return res.status(200).json({
-      error: `Stok Tidak Cukup.`,
+      error: 1,
+      message: `Stok Tidak Cukup.`,
     });
   } else {
     // insert into book collection
@@ -271,10 +282,6 @@ export const insertBookCollection = async (req, res) => {
         });
       }
     });
-    return res.status(200).json({
-      error: 0,
-      message: "Success Added",
-    });
   } else {
     // single book
     bookData = req.body.book;
@@ -294,11 +301,6 @@ export const insertBookCollection = async (req, res) => {
         discount: discountData,
         stock: stockData,
       });
-      log("Data has been added to mongo");
-      return res.status(200).json({
-        error: 0,
-        message: "Success Added",
-      });
     } catch (err) {
       console.log(err);
       return res.status(500).json({
@@ -307,18 +309,23 @@ export const insertBookCollection = async (req, res) => {
       });
     }
   }
+  log("Data has been added to mongo");
+  return res.status(200).json({
+    error: 0,
+    message: "Success Added",
+  });
 };
 
 export const readBookCollection = async (req, res) => {
   try {
     const book = await Books.find({});
     if (book.length == 0) {
-      res.send({
+      return res.status(404).json({
         error: 1,
         message: "No Data",
       });
     } else {
-      res.send({
+      return res.status(200).json({
         error: 0,
         book: book,
       });
@@ -326,7 +333,7 @@ export const readBookCollection = async (req, res) => {
     console.log(book);
   } catch (err) {
     console.log(err);
-    res.send({
+    return res.status(500).json({
       error: 1,
       message: err,
     });
@@ -338,22 +345,26 @@ export const insertBookShelfCollection = async (req, res) => {
   // check data is null/not
   if (!book.title) {
     return res.status(400).json({
-      error: `Title is null`,
+      error: 1,
+      message: `Title is null`,
     });
   }
   if (!book.writer) {
     return res.status(400).json({
-      error: `Writer is null`,
+      error: 1,
+      message: `Writer is null`,
     });
   }
   if (!book.publisher) {
     return res.status(400).json({
-      error: `Publisher is null`,
+      error: 1,
+      message: `Publisher is null`,
     });
   }
   if (!book.genre) {
     return res.status(400).json({
-      error: `Genre is null`,
+      error: 1,
+      message: `Genre is null`,
     });
   }
 
@@ -432,19 +443,19 @@ export const readBookShelfCollection = async (req, res) => {
   try {
     const bookShelf = await BookShelf.find({});
     if (bookShelf.length == 0) {
-      res.send({
+      return res.status(404).json({
         error: 1,
         message: "No Data",
       });
     } else {
-      res.send({
+      return res.status(200).json({
         error: 0,
         bookShelf: bookShelf,
       });
     }
   } catch (err) {
     console.log(err);
-    res.send({
+    return res.status(500).json({
       error: 1,
       message: err,
     });
@@ -456,7 +467,8 @@ export const updateBookShelfCollection = async (req, res) => {
   const titleChanged = req.query.titleChanged;
   if (!titleIdentifier || !titleChanged) {
     return res.status(400).json({
-      error: `Parameters are missing`,
+      error: 1,
+      message: `Parameters are missing`,
     });
   }
   try {
@@ -466,7 +478,7 @@ export const updateBookShelfCollection = async (req, res) => {
     );
   } catch (err) {
     console.log(err);
-    res.send({
+    return res.status(500).json({
       error: 1,
       message: err,
     });
@@ -477,7 +489,8 @@ export const deleteBookShelfCollection = async (req, res) => {
   const title = req.query.title;
   if (!title) {
     return res.status(400).json({
-      error: `Title are missing`,
+      error: 1,
+      message: `Title are missing`,
     });
   }
 
@@ -521,7 +534,7 @@ export const deleteBookShelfCollection = async (req, res) => {
 
   // check if book has found/noot
   if (response == null) {
-    return res.send({
+    return res.status(404).json({
       error: 1,
       message: "No data found",
     });
@@ -556,7 +569,6 @@ export const deleteBookShelfCollection = async (req, res) => {
       message: err,
     });
   }
-
   return res.status(200).json({
     error: 0,
     message: "Success",
@@ -566,7 +578,7 @@ export const deleteBookShelfCollection = async (req, res) => {
 export const filterBookShelfID = async (req, res) => {
   var id = req.query.idBook;
   if (id.length != 24) {
-    res.send({
+    return res.status(400).json({
       error: 1,
       message: "Invalid ID, ID must be 24 characters long",
     });
@@ -577,12 +589,12 @@ export const filterBookShelfID = async (req, res) => {
       idBook: new mongoose.mongo.ObjectId(id),
     });
     if (bookShelf.length == 0) {
-      res.send({
+      return res.status(404).json({
         error: 1,
         message: "No Data",
       });
     } else {
-      res.send({
+      return res.status(200).json({
         error: 0,
         bookShelf: bookShelf,
       });
@@ -590,6 +602,10 @@ export const filterBookShelfID = async (req, res) => {
     console.log(book);
   } catch (err) {
     console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
   }
 };
 
@@ -611,7 +627,7 @@ export const filterBookShelfCollection = async (req, res) => {
     );
 
     return res.status(200).json({
-      error: 1,
+      error: 0,
       book: data,
     });
   } catch (err) {
@@ -629,7 +645,8 @@ export const filterArrayBookShelfCollection = async (req, res) => {
 
   if (!writer || !genre) {
     return res.status(400).json({
-      error: `Parameters are missing`,
+      error: 1,
+      message: `Parameters are missing`,
     });
   }
   try {
@@ -650,7 +667,7 @@ export const filterArrayBookShelfCollection = async (req, res) => {
     );
 
     return res.status(200).json({
-      error: 1,
+      error: 0,
       book: data,
     });
   } catch (err) {
@@ -666,19 +683,19 @@ export const listGenreBookShelfCollection = async (req, res) => {
   try {
     const bookShelf = await BookShelf.distinct("books.genre");
     if (bookShelf.length == 0) {
-      res.send({
+      return res.status(404).json({
         error: 1,
         message: "No Data",
       });
     } else {
-      res.send({
+      return res.status(200).json({
         error: 0,
         genre: bookShelf,
       });
     }
   } catch (err) {
     console.log(err);
-    res.send({
+    return res.status(500).json({
       error: 1,
       message: err,
     });
@@ -688,7 +705,9 @@ export const listGenreBookShelfCollection = async (req, res) => {
 export const listGenreEachBook = async (req, res) => {
   try {
     const bookShelf = await BookShelf.aggregate([
-      { $project: { genreEachBook: "$books.genre" } },
+      { $project: {
+        genreEachBook: "$books.genre" 
+      } },
       {
         $addFields: {
           totalBook: { $size: "$genreEachBook" },
@@ -696,19 +715,19 @@ export const listGenreEachBook = async (req, res) => {
       },
     ]);
     if (bookShelf.length == 0) {
-      res.send({
+      return res.status(404).json({
         error: 1,
         message: "No Data",
       });
     } else {
-      res.send({
+      return res.status(200).json({
         error: 0,
         genreEachBook: bookShelf,
       });
     }
   } catch (err) {
     console.log(err);
-    res.send({
+    return res.status(500).json({
       error: 1,
       message: err,
     });
@@ -727,19 +746,117 @@ export const listGenreEachBookUnwind = async (req, res) => {
       },
     ]);
     if (bookShelf.length == 0) {
-      res.send({
+      return res.status(404).json({
         error: 1,
         message: "No Data",
       });
     } else {
-      res.send({
+      return res.status(200).json({
         error: 0,
         genreEachBook: bookShelf,
       });
     }
   } catch (err) {
     console.log(err);
-    res.send({
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const sortOfBookTitle = async (req, res) => {
+  const genre = req.query.genre;
+
+  if (!genre) {
+    return res.status(400).json({
+      error: 1,
+      message: `Parameters genre missing`,
+    });
+  }
+  try {
+    const bookShelf = await BookShelf.aggregate([
+      { $unwind: "$books" },
+      { $match: { "books.genre": genre } },
+      {
+        $project: {
+          _id: 0,
+          _idBook: "$books._id",
+          title: "$books.title",
+          genre: "$books.genre",
+          publisher_writer: {
+            $concat: ["$books.publisher", " - ", "$books.writer"],
+          },
+        },
+      },
+      {
+        $addFields: {
+          totalGenre: { $size: "$genre" },
+        },
+      },
+      { $sort: { title: 1, writer: 1 } },
+    ]);
+
+    return res.status(200).json({
+      error: 0,
+      data: bookShelf,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      error: 1,
+      message: err,
+    });
+  }
+};
+
+export const sortOfBookTitleLookup = async (req, res) => {
+  const genre = req.query.genre;
+
+  if (!genre) {
+    return res.status(400).json({
+      error: 1,
+      message: `Parameters genre missing`,
+    });
+  }
+  try {
+    const bookShelf = await BookShelf.aggregate([
+      { $unwind: "$books" },
+      { $match: { "books.genre": genre } },
+      {
+        $project: {
+          _id: 0,
+          _idBook: "$books._id",
+          title: "$books.title",
+          genre: "$books.genre",
+          publisher_writer: {
+            $concat: ["$books.publisher", " - ", "$books.writer"],
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "books",
+          localField: "writer",
+          foreignField: "writer",
+          as: "addfield",
+        },
+      },
+      {
+        $addFields: {
+          totalGenre: { $size: "$genre" },
+        },
+      },
+      { $sort: { title: 1, writer: 1 } },
+    ]);
+
+    return res.status(200).json({
+      error: 0,
+      data: bookShelf,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
       error: 1,
       message: err,
     });
