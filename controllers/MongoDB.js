@@ -691,7 +691,7 @@ export const listGenreEachBook = async (req, res) => {
       { $project: { genreEachBook: "$books.genre" } },
       {
         $addFields: {
-          totalBook: { $size: "$genre" },
+          totalBook: { $size: "$genreEachBook" },
         },
       },
     ]);
